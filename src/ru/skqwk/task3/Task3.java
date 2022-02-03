@@ -20,26 +20,32 @@ public class Task3 {
 
     public static Map<Integer, ArrayList<String>> countVowels(String s) {
         Map<Integer, ArrayList<String>> orderedMap = new TreeMap<>(Collections.reverseOrder());
-        int count = 0, beginIndex = 0, endIndex = 0;
+
+        int count = 0, beginIndex = 0, endIndex = 0, firstVowelIndex = -1;
+
         for (; endIndex < s.length(); ++endIndex) {
             char c = Character.toLowerCase(s.charAt(endIndex));
 
             if (c == ' ') {
-                String formatStr = formatString(s, beginIndex, endIndex);
+                String formatStr = formatString(s, beginIndex, endIndex, firstVowelIndex);
                 addToMap(orderedMap, formatStr, count);
                 count = 0;
                 beginIndex = endIndex+1;
+                firstVowelIndex = -1;
             }
-            else if (vowels.contains(c)) ++count;
+            else if (vowels.contains(c)) {
+                ++count;
+                if (count == 1) firstVowelIndex = endIndex-beginIndex;
+            }
         }
-        String formatStr = formatString(s, beginIndex, endIndex);
+        String formatStr = formatString(s, beginIndex, endIndex, firstVowelIndex);
         addToMap(orderedMap, formatStr, count);
         return orderedMap;
     }
 
-    public static String formatString(String s, int beginIndex, int endIndex) {
+    public static String formatString(String s, int beginIndex, int endIndex, int firstVowelIndex) {
         StringBuilder str = new StringBuilder(s.substring(beginIndex, endIndex));
-        str.setCharAt(0, Character.toUpperCase(str.charAt(0)));
+        if (firstVowelIndex != -1) str.setCharAt(firstVowelIndex, Character.toUpperCase(str.charAt(firstVowelIndex)));
         return str.toString();
     }
 

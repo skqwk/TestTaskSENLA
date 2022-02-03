@@ -9,7 +9,7 @@ public class Task5 {
 
         Safe safe = new Safe(4);
 
-        new SafeManager().fillSafeByItems(safe, new Item[]{guitar, audioPlayer, laptop});
+        new SafeManager().fillSafeByItems(safe, new Item[]{guitar, audioPlayer, laptop, iPhone});
 
         System.out.println("Max cost of safe = " + safe.getCost());
     }
